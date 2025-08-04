@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Table Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>This template is returned by Django server</h1>
+
+        <a href="/contact/">Contact</a> |
+        <a href="/about/">About</a> 
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>S. No</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Can Vote</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for people in peoples %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ people.name }}</td>
+                    <td>{{ people.age }}</td>
+                    <td {% if people.age < 18 %} style="background-color: red;" {% endif %}>
+                        {% if people.age >= 18 %}
+                            👍
+                        {% else %}
+                            👎
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p>
+            {% if "cucumber" in vegetables %}
+                Cucumber is Available
+            {% elif "Tomato" in vegetables %}
+                Tomato is Available
+            {% else %}
+                No required vegetables available
+            {% endif %}
+        </p>
+    </div>
+</body>
+</html>
