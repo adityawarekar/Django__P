@@ -9,8 +9,8 @@ class Student(models.Model):
     address = models.TextField(null=True , blank=True)
  
 class Car(models.Model):
-    car_name = models.CharField(max_length=500)
+    car_name = models.CharField(max_length=100)
     speed = models.IntegerField(default=50)
 
-    def __str__(self) -> str:
+    def __str__(self) -> str: 
         return self.car_name 
