@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 EXTERNAL_APPS =[
     'accounts',
     'home',
+    'vege',
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
