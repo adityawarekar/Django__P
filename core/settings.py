@@ -43,7 +43,16 @@ EXTERNAL_APPS =[
     'accounts',
     'home',
     'vege',
+    
+
 ]
+import os
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
 
 INSTALLED_APPS += EXTERNAL_APPS
 
