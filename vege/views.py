@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Receipe
 
 def receipes(request):
@@ -20,4 +20,6 @@ def receipes(request):
 
 
 def delete_receipe(request, id):
-    return redirect('/receipes')
+    receipe = get_object_or_404(Receipe, id=id)
+    receipe.delete()
+    return redirect('/receipes/')
