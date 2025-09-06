@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+
 EXTERNAL_APPS =[
     'accounts',
     'home',
