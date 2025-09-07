@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 ]
 
 
+
 EXTERNAL_APPS =[
     'accounts',
     'home',
@@ -47,6 +48,7 @@ EXTERNAL_APPS =[
     
 
 ]
+LOGIN_URL = '/login/'
 import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

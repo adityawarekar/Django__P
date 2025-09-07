@@ -8,19 +8,19 @@
     <h2>Update Recipe</h2>
     <hr>
 
-    <!-- Recipe Name -->
+   
     <div class="mb-3">
       <label class="form-label">Recipe Name</label>
       <input type="text" value="{{ receipe.receipe_name }}" name="name" class="form-control" required>
     </div>
 
-    <!-- Recipe Description -->
+    
     <div class="mb-3">
       <label class="form-label">Recipe Description</label>
       <textarea name="description" class="form-control" required>{{ receipe.receipe_description }}</textarea>
     </div>
 
-    <!-- Recipe Image -->
+   
     <div class="mb-3">
       <label class="form-label">Recipe Image</label>
       <input type="file" name="image" class="form-control">
@@ -30,7 +30,7 @@
       {% endif %}
     </div>
 
-    <!-- Submit -->
+   
     <button type="submit" class="btn btn-success">Update Recipe</button>
     <a href="/receipes/" class="btn btn-secondary ms-2">Cancel</a>
   </form>

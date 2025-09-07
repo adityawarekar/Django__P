@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Receipe
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -12,18 +14,16 @@ def register(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already taken. Please choose another one.")
             return redirect('/register/')
 
-      
         user = User.objects.create(
             first_name=first_name,
             last_name=last_name,
             username=username,
         )
-        user.set_password(password)  # Hash password
+        user.set_password(password) 
         user.save()
 
         messages.success(request, "Account created successfully! Please login.")
@@ -32,11 +32,36 @@ def register(request):
     return render(request, 'register.html')
 
 
+
 def login_page(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, 'Invalid Username')
+            return redirect('/login/')
+
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            messages.error(request, 'Invalid Password')
+            return redirect('/login/')
+        else:
+            login(request, user)
+            return redirect('/receipes/')
+
     return render(request, "login.html")
 
 
 
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
+
+
+
+@login_required
 def receipes(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -54,7 +79,7 @@ def receipes(request):
     return render(request, "receipes.html", {"receipes": receipes})
 
 
-
+@login_required
 def update_receipe(request, id):
     receipe = get_object_or_404(Receipe, id=id)
 
@@ -69,7 +94,7 @@ def update_receipe(request, id):
     return render(request, "update_receipe.html", {"receipe": receipe})
 
 
-
+@login_required
 def delete_receipe(request, id):
     receipe = get_object_or_404(Receipe, id=id)
     receipe.delete()

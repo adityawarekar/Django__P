@@ -2,9 +2,10 @@
 {% load static %}
 
 {% block start %}
+
 <div class="container mt-5">
 
-  <!-- Add Recipe Form -->
+
   <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <h2>Add Recipe</h2>
@@ -36,7 +37,7 @@
     <button type="submit" class="btn btn-primary">Search</button>
     </form>
   
-  <!-- Recipes Table -->
+
   <h3 class="mt-5">All Recipes</h3>
   <table class="table table-bordered text-center align-middle">
     <thead class="table-dark">
