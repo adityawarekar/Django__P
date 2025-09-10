@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipes</title>
+</head>
+<body>
+    <h1>Receipes</h1>
+    <ul>
+        {% for recipe in recipes %}
+            <li>
+                {{ recipe.receipe_name }} (Views: {{ recipe.receipe_view_count }})
+                <br>
+                {{ recipe.receipe_description }}
+            </li>
+        {% empty %}
+            <li>No receipes found</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

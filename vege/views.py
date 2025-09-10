@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Receipe
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .models import Receipe, Department, Student
 
 
 
@@ -99,3 +100,16 @@ def delete_receipe(request, id):
     receipe = get_object_or_404(Receipe, id=id)
     receipe.delete()
     return redirect('receipes')
+
+
+def receipe_list(request):
+    receipes = Receipe.objects.all().order_by("-receipe_view_count")
+    return render(request, "receipe_list.html", {"receipes": receipes})
+
+def department_list(request):
+    departments = Department.objects.all()
+    return render(request, "department_list.html", {"department": departments})
+
+def student_list(request):
+    students = Student.objects.all()
+    return render(request, "student_list.html", {"students": students})

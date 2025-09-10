@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from home.views import home, contact, about, success_page
 from vege.views import (
     receipes, delete_receipe, update_receipe,
@@ -20,6 +20,7 @@ urlpatterns = [
     path('register/', register, name="register"),
     path('success-page/', success_page, name="success_page"),
     path('admin/', admin.site.urls),
+    path("", include("vege.urls")),
 ]
 
 if settings.DEBUG:  
