@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Receipe, Department, Student
 
-# Register your models here.
+
 from .models import *
 
 @admin.register(Receipe)
