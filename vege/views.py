@@ -113,3 +113,7 @@ def department_list(request):
 def student_list(request):
     students = Student.objects.all()
     return render(request, "student_list.html", {"students": students})
+
+def student_report(request):
+    students = Student.objects.all()
+    return render(request, "students.html", {"students": students})

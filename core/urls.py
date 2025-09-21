@@ -3,7 +3,7 @@ from django.urls import path, include
 from home.views import home, contact, about, success_page
 from vege.views import (
     receipes, delete_receipe, update_receipe,
-    login_page, register, logout_page
+    login_page, register, logout_page, student_report
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -19,6 +19,7 @@ urlpatterns = [
     path('logout/', logout_page, name="logout"), 
     path('register/', register, name="register"),
     path('success-page/', success_page, name="success_page"),
+   path("students/", student_report, name="student_report"), 
     path('admin/', admin.site.urls),
     path("", include("vege.urls")),
 ]
