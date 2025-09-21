@@ -5,6 +5,7 @@ from .models import Receipe
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Receipe, Department, Student
+from django.core.paginator import Paginator
 
 
 
@@ -115,5 +116,8 @@ def student_list(request):
     return render(request, "student_list.html", {"students": students})
 
 def student_report(request):
-    students = Student.objects.all()
-    return render(request, "students.html", {"students": students})
+    student_list = Student.objects.all()
+    paginator = Paginator(student_list, 25)  # 25 students per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "students.html", {"page_obj": page_obj})
