@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Receipe
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Receipe, Department, Student
 from django.core.paginator import Paginator
+from django.db.models import Sum
 
+from .models import Receipe, Department, Student, SubjectMarks
 
 
 def register(request):
@@ -25,14 +25,13 @@ def register(request):
             last_name=last_name,
             username=username,
         )
-        user.set_password(password) 
+        user.set_password(password)
         user.save()
 
         messages.success(request, "Account created successfully! Please login.")
         return redirect('/login/')
 
     return render(request, 'register.html')
-
 
 
 def login_page(request):
@@ -56,13 +55,11 @@ def login_page(request):
     return render(request, "login.html")
 
 
-
 def logout_page(request):
     logout(request)
     return redirect('/login/')
 
 
-  
 @login_required
 def receipes(request):
     if request.method == "POST":
@@ -107,17 +104,48 @@ def receipe_list(request):
     receipes = Receipe.objects.all().order_by("-receipe_view_count")
     return render(request, "receipe_list.html", {"receipes": receipes})
 
+
 def department_list(request):
     departments = Department.objects.all()
     return render(request, "department_list.html", {"department": departments})
+
 
 def student_list(request):
     students = Student.objects.all()
     return render(request, "student_list.html", {"students": students})
 
+
 def student_report(request):
     student_list = Student.objects.all()
-    paginator = Paginator(student_list, 25)  # 25 students per page
+    paginator = Paginator(student_list, 25)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, "students.html", {"page_obj": page_obj})
+
+
+@login_required
+def see_marks(request, student_id):
+   
+    queryset = SubjectMarks.objects.filter(student__student_id__student_id=student_id)
+
+  
+    total_marks = queryset.aggregate(total=Sum('marks'))['total'] or 0
+
+    
+    all_totals = (
+        SubjectMarks.objects.values('student__student_id__student_id')
+        .annotate(total=Sum('marks'))
+        .order_by('-total')
+    )
+
+    rank = None
+    for idx, student in enumerate(all_totals, start=1):
+        if student['student__student_id__student_id'] == student_id:
+            rank = idx
+            break
+
+    return render(request, "see_marks.html", {
+        "queryset": queryset,
+        "total_marks": total_marks,
+        "rank": rank,
+    })
