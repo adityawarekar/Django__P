@@ -5,7 +5,7 @@ from .models import Department, Student, StudentID, Subject, SubjectMarks
 fake = Faker()
 
 
-# 1. Seed Subjects
+
 def seed_subjects():
     subjects = ["Maths", "Physics", "Chemistry", "Biology", "English"]
     for sub in subjects:
@@ -13,7 +13,7 @@ def seed_subjects():
     print("✅ Subjects created successfully.")
 
 
-# 2. Seed Students
+
 def seed_db(n=10) -> None:
     departments_objs = Department.objects.all()
 
@@ -25,7 +25,7 @@ def seed_db(n=10) -> None:
         try:
             department = random.choice(departments_objs)
 
-            # generate unique student_id
+          
             student_id = f"STU-{random.randint(1000, 9999)}"
             while StudentID.objects.filter(student_id=student_id).exists():
                 student_id = f"STU-{random.randint(1000, 9999)}"
@@ -49,15 +49,15 @@ def seed_db(n=10) -> None:
             print(f"✅ Student {student_name} created successfully.")
 
         except Exception as e:
-            print(f"❌ Error creating student {i+1}: {e}")
+            print(f" Error creating student {i+1}: {e}")
 
 
-# 3. Create Subject Marks
+
 def create_subject_marks(n=None):
     try:
         student_objs = Student.objects.all()
         if n:
-            student_objs = student_objs[:n]  # limit to n students if given
+            student_objs = student_objs[:n]  
 
         subjects = Subject.objects.all()
         if not subjects.exists():
@@ -71,7 +71,7 @@ def create_subject_marks(n=None):
                     student=student,
                     marks=random.randint(0, 100)
                 )
-            print(f"✅ Marks created for {student.student_name}")
+            print(f" Marks created for {student.student_name}")
 
     except Exception as e:
-        print(f"❌ Error creating subject marks: {e}")
+        print(f" Error creating subject marks: {e}")

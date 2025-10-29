@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Receipe(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -30,6 +33,8 @@ class StudentID(models.Model):
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=100)
+ 
+
 
 class Student(models.Model):   
     department = models.ForeignKey(Department, related_name="depart", on_delete=models.CASCADE)
